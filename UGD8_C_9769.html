@@ -14,7 +14,7 @@
                 <div class="card-body" @submit="Cektebak">
                     <h1 class="card-title">Tebak Angka Antara 1-10!</h1>
                     <p class="card-text">Anda punya {{ chance }} kali kesempatan</p>
-                    <input v-model="number" placeholder="1-10" />
+                    <input v-model="angkaInput" type="number" placeholder="1-10" />
                     <br><br>
                         <button type="button" class="btn btn-primary" @click="Cektebak">Tebak</button>
                 </div>
@@ -41,19 +41,22 @@
                 angkaInput: null
             },
             methods: {
-                randomNumber: function () {
-                    this.random = Math.floor(Math.random() * (10 - 1 + 1)) + 1
+                randomNumber: function (e) {
+                    this.angkaBenar = Math.floor(Math.random() * (10 - 1 + 1)) + 1
                     console.log(this.angkaBenar);
                 },
-                Cektebak: function () {
+                Cektebak: function (e) {
+                if (this.angkaBenar === -1)
+                    this.randomNumber();
                 if (this.angkaBenar == this.angkaInput) {
                     this.jawaban = true;
                     this.clicked = true;
                     this.chance = 3;
-                    return `Anda Beruntung`;
+                    alert ('Anda Beruntung');
+                    this.retry();
                 } else if(this.chance == 0){
                     alert('Anda Tidak Beruntung');
-                    retry()
+                    this.retry();
                 } else {
                     this.jawaban = false;
                     this.clicked = true;
