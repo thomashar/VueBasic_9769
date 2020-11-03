@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+    padding: 25px;
+    background-color: #477b9e;
+}
+
+#app {
+    margin-top: 50px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    margin-top: 450px;
+    vertical-align: bottom;
+}
