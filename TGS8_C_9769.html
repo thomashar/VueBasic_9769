@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial—scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="vue.js"></script>
+    <title>Tugas VueBasic 9769</title>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <h1>ToDo List</h1>
+        <div class="form-group card">
+            <div class="flex">
+                <input type="text" name="todo" id="todo" placeholder="isi todo" v-model="todo" @keyup.enter="addtodo">
+            </div>
+            <div class="flex">
+                <select  v-model="priority" @keyup.enter="addtodo">
+                    <option value="" selected>pilih prioritas</option>
+                    <option value="Penting">Penting</option>
+                    <option value="Biasa">Biasa</option>
+                    <option value="Tidak Penting">Tidak Penting</option>
+                </select>
+            </div>
+            <div class="flex">
+                <input type="text" name="message" id="message" placeholder="isi message" v-model="message" @keyup.enter="addtodo">
+            </div>
+            <button class="btn btn-primary" @click="addtodo()" >Tambah</button>
+        </div>
+        <table class="table" v-if="todoList.length > 0">
+            <thead>
+                <tr>
+                    <th scope="col">Todo</th>
+                    <th scope="col">Prioritas</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody v-for="todoList in reversedItems" :class="{completed: todoList.completed}">
+                <td>{{ todoList.todo }}</td>
+                <td v-if="todoList.priority == 'Penting'" style="background-color: red;">{{ todoList.priority }}</td>
+                <td v-else-if="todoList.priority == 'Biasa'" style="background-color: blue;">{{ todoList.priority }}</td>
+                <td v-else style="background-color: green;">{{ todoList.priority }}</td>
+                <td>{{ todoList.message }}</td>
+                <td>
+                    <button class="btn btn-danger" @click="deleteTodo(index)">
+                        Hapus
+                    </button>
+                </td>
+            </tbody>
+        </table>
+        <h3 v-else>ToDonya kosong mas/mbak</h3>
+    
+        <div class="footer text-center">
+            <p>Thomas Haryo Wibisono | 180709769 | C</p>
+        </div>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            todoList: [],
+            todo: '',
+            priority: '',
+            message: ''
+        },
+        methods: {
+            addtodo: function() {
+                this.todoList.push({
+                    todo: this.todo,
+                    priority: this.priority,
+                    message: this.message
+                });
+                this.todo = '';
+                this.priority = '';
+                this.message = '';
+            },
+            deleteTodo(index) {
+                this.todoList.splice(index, 1);
+            }
+        },
+        computed: {
+            reversedItems() {
+              return this.todoList.slice(0).reverse();
+            },
+          },
+    })
+</script>
+<style>
+    html {
+        background-color: aqua;
+    }
+
+    .container {
+        margin-top: 50px;
+        border-radius: 4px;
+    }
+
+    .card {
+        border-radius: 4px;
+        box-shadow: 1px 1px 40px -10px #31505f30, 0px 1px 2px 0px #31505f30;
+        background: white;
+        margin-bottom: 24px;
+    }
+ 
+    input {
+        border-radius: 4px;
+        background: transparent;
+        border: none;
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+        border: 1px solid transparent;
+        height: 100%;
+        display: block;
+        outline: none;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    select {
+        border-radius: 4px;
+        background: transparent;
+        border: none;
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+        border: 1px solid transparent;
+        height: 100%;
+        display: block;
+        outline: none;
+    }
+
+    .footer {
+    margin-top: 600px;
+    vertical-align: bottom;
+    }
+</style>
+</html>
